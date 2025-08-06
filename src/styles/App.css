@@ -1,0 +1,18 @@
+.App {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.upload-area {
+  border: 2px dashed #ccc;
+  padding: 40px;
+  text-align: center;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+button {
+  padding: 8px 16px;
+  margin: 5px;
+  cursor: pointer;
+}

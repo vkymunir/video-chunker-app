@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import VideoUploader from './components/VideoUploader';
-import VideoPreview from './components/VideoPreview';
-import ChunkList from './components/ChunkList';
-import EditingTools from './components/EditingTools';
-import './styles/App.css';
+import React, { useState } from "react";
+import VideoUploader from "./components/VideoUploader";
+import VideoPreview from "./components/VideoPreview";
+import ChunkList from "./components/ChunkList";
+import EditingTools from "./components/EditingTools";
+import "./styles/App.css";
 
 function App() {
   const [videoFile, setVideoFile] = useState(null);
@@ -18,13 +18,13 @@ function App() {
     setVideoPath(file.path);
     setChunks([]);
     setIsProcessing(true);
-    
+
     try {
       const result = await window.electronAPI.processVideoChunks(file.path);
       setChunks(result.chunks);
     } catch (error) {
       console.error(error);
-      alert('Failed to process video.');
+      alert("Failed to process video.");
     } finally {
       setIsProcessing(false);
     }
@@ -36,24 +36,32 @@ function App() {
     });
 
     return () => {
-      window.electronAPI.removeAllListeners('processing-progress');
+      window.electronAPI.removeAllListeners("processing-progress");
     };
   }, []);
 
   return (
     <div className="App">
       <h1>Video Chunker</h1>
-      <VideoUploader onVideoUpload={handleVideoUpload} disabled={isProcessing} />
-      
-      {isProcessing && <p>Processing video into 5-second chunks... {Math.round(processingProgress)}%</p>}
-      
+      <VideoUploader
+        onVideoUpload={handleVideoUpload}
+        disabled={isProcessing}
+      />
+
+      {isProcessing && (
+        <p>
+          Processing video into 5-second chunks...{" "}
+          {Math.round(processingProgress)}%
+        </p>
+      )}
+
       {videoPath && <VideoPreview videoPath={videoPath} />}
-      
+
       {chunks.length > 0 && (
         <>
           <h2>Chunks ({chunks.length})</h2>
           <ChunkList chunks={chunks} onSelectChunk={setSelectedChunk} />
-          
+
           {selectedChunk && (
             <div>
               <h3>Editing: {selectedChunk.filename}</h3>

@@ -1,15 +1,19 @@
-import React from 'react';
-import { useDropzone } from 'react-dropzone';
+import React from "react";
+import { useDropzone } from "react-dropzone";
 
 function VideoUploader({ onVideoUpload, disabled }) {
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
-    if (file && file.type.startsWith('video/')) {
+    if (file && file.type.startsWith("video/")) {
       onVideoUpload(file);
     }
   };
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: { 'video/*': [] }, disabled });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: { "video/*": [] },
+    disabled,
+  });
 
   return (
     <div {...getRootProps()} className="upload-area">
